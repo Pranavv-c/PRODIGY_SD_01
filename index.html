@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+  <title>Temperature Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: hsl(180, 8%, 92%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: rgb(113, 206, 220);
+      padding: 20px 80px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px #423fe0f3;
+      text-align: center;
+      width: 600px;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      background: #eff1f3;
+      color: rgb(15, 14, 14);
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background: #e7ee29;
+    }
+    .result {
+      margin-top: 25px;
+      font-weight: bold;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2> Temperature Converter</h2>
+    <input type="number" id="temperature" placeholder="Enter value">
+    <select id="unit">
+      <option value="C">Celsius (°C)</option>
+      <option value="F">Fahrenheit (°F)</option>
+      <option value="K">Kelvin (K)</option>
+    </select>
+    <button onclick="convertTemperature()">Submit</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function convertTemperature() {
+      let temp = parseFloat(document.getElementById("temperature").value);
+      let unit = document.getElementById("unit").value;
+      let result = "";
+
+      if (isNaN(temp)) {
+        result = "⚠️ Please enter a valid number!";
+      } else {
+        if (unit === "C") {
+          let f = (temp * 9/5) + 32;
+          let k = temp + 273.15;
+          result = `${temp.toFixed(2)} °C = ${f.toFixed(2)} °F, ${k.toFixed(2)} K`;
+        } else if (unit === "F") {
+          let c = (temp - 32) * 5/9;
+          let k = c + 273.15;
+          result = `${temp.toFixed(2)} °F = ${c.toFixed(2)} °C, ${k.toFixed(2)} K`;
+        } else if (unit === "K") {
+          if (temp < 0) {
+            result = "⚠️ Kelvin cannot be negative!";
+          } else {
+            let c = temp - 273.15;
+            let f = (c * 9/5) + 32;
+            result = `${temp.toFixed(2)} K = ${c.toFixed(2)} °C, ${f.toFixed(2)} °F`;
+          }
+        }
+      }
+      document.getElementById("result").innerText = result;
+    }
+  </script>
+</body>
+</html>
